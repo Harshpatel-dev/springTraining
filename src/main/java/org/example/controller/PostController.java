@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,11 +21,6 @@ public class PostController {
 
     @Autowired
     private PostService postService;
-
-    @GetMapping("/hello")
-    public String hello() {
-        return "Hello, World 12345!";
-    }
 
     @PostMapping("/create")
     public ResponseEntity<Post> createPost(@RequestBody PostRequest postRequest) {
@@ -59,6 +55,8 @@ public class PostController {
     
     @PutMapping("/update/{id}")
     public ResponseEntity<Post> updatePost(@PathVariable Long id, @RequestBody PostRequest postRequest) {
+        Post post = postRequest.getPost();
+        List<Hashtag> hashtag = postRequest.getHashtags();
         Post updatePost = postService.updatePost(id, postRequest.getPost(), postRequest.getHashtags());
         
         if(updatePost != null) {
