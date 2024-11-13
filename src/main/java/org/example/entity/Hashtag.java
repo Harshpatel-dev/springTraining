@@ -17,6 +17,12 @@ public class Hashtag {
     @JsonIgnore
     @ManyToMany(mappedBy = "hashtags")
     private List<Post> posts = new ArrayList<>();
+    
+    public Hashtag() {}
+    
+    public Hashtag(String name) {
+        this.name = name;
+    }
 
     public Long getId() {
         return id;

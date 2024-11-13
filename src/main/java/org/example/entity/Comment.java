@@ -10,6 +10,16 @@ public class Comment {
     private Long id;
 
     private String text;
+
+    public boolean isValid() {
+        return isValid;
+    }
+
+    public void setValid(boolean valid) {
+        isValid = valid;
+    }
+
+    private boolean isValid;
     @JsonIgnore
     @ManyToOne
     private Post post;

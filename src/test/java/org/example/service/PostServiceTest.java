@@ -78,22 +78,22 @@ class PostServiceTest {
         assertEquals(2, hashtagRepository.findAll().size()); // Checks if two hashtags were saved
     }
 
-//    @Test
-//    void createPostWithCommentsAndHashtags_ShouldThrowCustomServiceException_OnDataAccessException() throws Exception {
-//            post.setTitle("Valid Title");
-//            // Close the database connection to simulate a failure
-//            Connection connection = DataSourceUtils.getConnection(dataSource);
-//            connection.close();
-//
-//            // Act & Assert: Expect CustomServiceException when calling the service method
-//            CustomServiceException exception = assertThrows(CustomServiceException.class, () ->
-//                    postService.createPostWithCommentsAndHashtags(post, comments, hashtags)
-//            );
-//
-//            // Assert: Check the exception's message and error code
-//            assertTrue(exception.getMessage().contains("Failed to save post to the database"));
-//            assertEquals("DATABASE_ERROR", exception.getErrorCode());
-//    }
+    @Test
+    void createPostWithCommentsAndHashtags_ShouldThrowCustomServiceException_OnDataAccessException() throws Exception {
+            post.setTitle("Valid Title");
+            // Close the database connection to simulate a failure
+            Connection connection = DataSourceUtils.getConnection(dataSource);
+            connection.close();
+
+            // Act & Assert: Expect CustomServiceException when calling the service method
+            CustomServiceException exception = assertThrows(CustomServiceException.class, () ->
+                    postService.createPostWithCommentsAndHashtags(post, comments, hashtags)
+            );
+
+            // Assert: Check the exception's message and error code
+            assertTrue(exception.getMessage().contains("Failed to save post to the database"));
+            assertEquals("DATABASE_ERROR", exception.getErrorCode());
+    }
 
     @Test
     void createPostWithCommentsAndHashtags_ShouldThrowCustomServiceException_OnUnknownError() {

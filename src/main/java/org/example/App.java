@@ -7,8 +7,11 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.integration.support.MessageBuilder;
+import org.springframework.messaging.MessageChannel;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -20,7 +23,23 @@ public class App
 {
     public static void main( String[] args )
     {
-        SpringApplication.run(App.class, args);
+//        SpringApplication.run(App.class, args);
+        ApplicationContext context = SpringApplication.run(App.class, args);
+
+        MessageChannel postChannel = context.getBean("postChannel", MessageChannel.class);
+
+        Post post1 = new Post("Async post #1 with #SpringIntegration", Arrays.asList(
+                new Comment("Great post!"),
+                new Comment("Nice example!")
+        ));
+
+        Post post2 = new Post("Async post #2 with #Concurrency", Arrays.asList(
+                new Comment("Loving this feature!"),
+                new Comment("Great work!")
+        ));
+
+        postChannel.send(MessageBuilder.withPayload(post1).build());
+        postChannel.send(MessageBuilder.withPayload(post2).build());
 //        ApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
         
 //        PatientRepository patientRepository = context.getBean(PatientRepository.class);

@@ -22,6 +22,18 @@ public class Post {
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "post_hashtag", joinColumns = @JoinColumn(name = "post_id"), inverseJoinColumns = @JoinColumn(name = "hashtag_id"))
     private List<Hashtag> hashtags = new ArrayList<>();
+    
+    public Post() {}
+    
+    public Post(String title, String content) {
+        this.title = title;
+        this.content = content;
+    }
+    
+    public Post(String title, List<Comment> comments) {
+        this.title = title;
+        this.comments = comments;
+    }
 
     public Long getId() {
         return id;
